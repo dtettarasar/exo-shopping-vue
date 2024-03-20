@@ -6,12 +6,12 @@
           <div class="product-image" :style="{backgroundImage: 'url(' + product.image + ')'}"></div>
           <h4 v-html="product.title" ></h4>
           <p class="price">US$ <span v-html="product.price.toFixed(2)"></span></p>
-          <button v-on:click="addToBag(product)">Add to bag</button>
+          <button v-if="!isInBag(product)" v-on:click="addToBag(product)">Add to bag</button>
+          <button v-else class="remove">Remove from bag</button>
         </div>
        
       </div>
     </div>
-    {{ productsInBag.length }}
   </template>
   
   <script>
@@ -40,6 +40,9 @@
         product.quantity = 1;
         //console.log(product);
         this.$store.dispatch('addToBag', product);
+      },
+      isInBag(product) {
+        return this.productsInBag.find(elem => elem.id == product.id);
       }
     }
   }
