@@ -17,6 +17,12 @@ export default createStore({
 
     addToBag(state, product) {
       state.productsInBag.push(product);
+    },
+
+    removeFromBag(state, productId) {
+      // créer une nouvelle version de l'array sans le produit que l'on souhaite retirer puis on écrase l'array définitf dans state, avec ce nouvel array
+      let updatedBag = state.productsInBag.filter(item => productId != item.id);
+      state.productsInBag = updatedBag;
     }
 
   },
@@ -34,6 +40,10 @@ export default createStore({
 
     addToBag({commit}, product) {
       commit('addToBag', product);
+    },
+
+    removeFromBag({commit}, productId) {
+      commit('removeFromBag', productId);
     }
 
   },

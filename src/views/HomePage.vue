@@ -7,7 +7,7 @@
           <h4 v-html="product.title" ></h4>
           <p class="price">US$ <span v-html="product.price.toFixed(2)"></span></p>
           <button v-if="!isInBag(product)" v-on:click="addToBag(product)">Add to bag</button>
-          <button v-else class="remove">Remove from bag</button>
+          <button v-else class="remove" v-on:click="removeFromBag(product.id)">Remove from bag</button>
         </div>
        
       </div>
@@ -41,8 +41,13 @@
         //console.log(product);
         this.$store.dispatch('addToBag', product);
       },
+
       isInBag(product) {
         return this.productsInBag.find(elem => elem.id == product.id);
+      },
+
+      removeFromBag(productId) {
+        this.$store.dispatch('removeFromBag', productId);
       }
     }
   }
