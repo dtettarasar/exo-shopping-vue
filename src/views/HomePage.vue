@@ -2,7 +2,7 @@
     <div class="home">
       <div class="products">
   
-        <div v-for="(product, index) in this.products" class="product" v-bind:key="index">
+        <div v-for="(product, index) in this.products" class="product" :class="{inBag: isInBag(product)}" v-bind:key="index">
           <div class="product-image" :style="{backgroundImage: 'url(' + product.image + ')'}"></div>
           <h4 v-html="product.title" ></h4>
           <p class="price">US$ <span v-html="product.price.toFixed(2)"></span></p>
