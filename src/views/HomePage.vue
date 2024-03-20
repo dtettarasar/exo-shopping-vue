@@ -6,11 +6,12 @@
           <div class="product-image" :style="{backgroundImage: 'url(' + product.image + ')'}"></div>
           <h4 v-html="product.title" ></h4>
           <p class="price">US$ <span v-html="product.price.toFixed(2)"></span></p>
-          <button>Add to bag</button>
+          <button v-on:click="addToBag(product)">Add to bag</button>
         </div>
        
       </div>
     </div>
+    {{ productsInBag.length }}
   </template>
   
   <script>
@@ -27,12 +28,19 @@
 
       products() {
         return this.$store.state.products
+      },
+      productsInBag() {
+        return this.$store.state.productsInBag
       }
 
     },
   
     methods: {
-     
+      addToBag(product) {
+        product.quantity = 1;
+        //console.log(product);
+        this.$store.dispatch('addToBag', product);
+      }
     }
   }
   </script>
