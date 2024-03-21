@@ -15,6 +15,8 @@
   </template>
   
   <script>
+
+  import { mapState } from 'vuex';
   
   export default {
     name: 'HomePage',
@@ -24,7 +26,16 @@
       }
     },
 
+    // Utilisation de mapState pour récupérer les données du store
+    computed: mapState([
+      'products',
+      'productsInBag'
+    ]),
+
+    /*
     computed: {
+
+      //mapState(['products', 'productsInBag']),
 
       products() {
         return this.$store.state.products
@@ -34,6 +45,7 @@
       }
 
     },
+    */
   
     methods: {
       addToBag(product) {
