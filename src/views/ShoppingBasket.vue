@@ -1,23 +1,32 @@
 <template>
     <div class="basket">
-      <div class="items">
-  
-        <div v-for="(product, index) in this.productsInBag" class="item" v-bind:key="index">
-          <div v-on:click="removeFromBag(product.id)" class="remove">Remove item</div>
-          <div class="photo"><img :src="product.image" alt=""></div>
-          <div v-html="product.title" class="description"></div>
-          <div class="price">
-            <span class="quantity-area">
-              <button disabled="">-</button>
-              <span class="quantity">{{product.quantity}}</span>
-              <button>+</button>
-            </span>
-            <span class="amount">US$ <span v-html="product.price.toFixed(2)"></span></span>
+
+      <template v-if="this.productsInBag.length >= 1">
+        
+        <div class="items">
+    
+          <div v-for="(product, index) in this.productsInBag" class="item" v-bind:key="index">
+            <div v-on:click="removeFromBag(product.id)" class="remove">Remove item</div>
+            <div class="photo"><img :src="product.image" alt=""></div>
+            <div v-html="product.title" class="description"></div>
+            <div class="price">
+              <span class="quantity-area">
+                <button v-on:click="product.quantity--" :disabled="product.quantity<=1">-</button>
+                <span class="quantity">{{product.quantity}}</span>
+                <button v-on:click="product.quantity++" >+</button>
+              </span>
+              <span class="amount">US$ <span v-html="(product.price * product.quantity).toFixed(2)"></span></span>
+            </div>
           </div>
+          <div class="grand-total"> Grand Total: US$ 22.30</div>
+    
         </div>
-        <div class="grand-total"> Grand Total: US$ 22.30</div>
-  
-      </div>
+      </template>
+
+      <template v-else>
+        <h4>Empty cart</h4>
+      </template>
+      
     </div>
   </template>
   
