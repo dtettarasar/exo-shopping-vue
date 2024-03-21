@@ -2,17 +2,17 @@
     <div class="basket">
       <div class="items">
   
-        <div class="item">
-          <div class="remove">Remove item</div>
-          <div class="photo"><img src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg" alt=""></div>
-          <div class="description">Mens Casual Premium Slim Fit T-Shirts </div>
+        <div v-for="(product, index) in this.productsInBag" class="item" v-bind:key="index">
+          <div v-on:click="removeFromBag(product.id)" class="remove">Remove item</div>
+          <div class="photo"><img :src="product.image" alt=""></div>
+          <div v-html="product.title" class="description"></div>
           <div class="price">
             <span class="quantity-area">
               <button disabled="">-</button>
-              <span class="quantity">1</span>
+              <span class="quantity">{{product.quantity}}</span>
               <button>+</button>
             </span>
-            <span class="amount">US$ 22.30</span>
+            <span class="amount">US$ <span v-html="product.price.toFixed(2)"></span></span>
           </div>
         </div>
         <div class="grand-total"> Grand Total: US$ 22.30</div>
@@ -22,12 +22,20 @@
   </template>
   
   <script>
+
+  import { mapState } from 'vuex';
   
   export default {
     name: 'ShoppingBasket',
+
+    computed: mapState([
+      'productsInBag'
+    ]),
   
     methods: {
-     
+      removeFromBag(productId) {
+        this.$store.dispatch('removeFromBag', productId);
+      }
     },
    
   }
