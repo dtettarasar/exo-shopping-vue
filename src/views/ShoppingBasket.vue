@@ -18,7 +18,7 @@
               <span class="amount">US$ <span v-html="(product.price * product.quantity).toFixed(2)"></span></span>
             </div>
           </div>
-          <div class="grand-total"> Grand Total: US$ 22.30</div>
+          <div class="grand-total"> Grand Total: US$ {{this.orderTotal()}}</div>
     
         </div>
       </template>
@@ -26,7 +26,7 @@
       <template v-else>
         <h4>Empty cart</h4>
       </template>
-      
+
     </div>
   </template>
   
@@ -44,6 +44,16 @@
     methods: {
       removeFromBag(productId) {
         this.$store.dispatch('removeFromBag', productId);
+      },
+      orderTotal() {
+        let total = 0;
+        
+        this.productsInBag.forEach(element => {
+          total += element.price * element.quantity;
+        });
+
+        return total.toFixed(2);
+
       }
     },
    
